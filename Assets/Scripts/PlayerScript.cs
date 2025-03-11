@@ -17,7 +17,7 @@ public class PlayerScript : MonoBehaviour
     public GameObject sword;
     public bool canHit = true;
     private SwordScript swordScript;
-    public GameObject[] hbPrefabs;
+    public GameObject hbPrefabs;
 
     private void Start()
     {
@@ -66,6 +66,13 @@ public class PlayerScript : MonoBehaviour
         StopCoroutine(stopCanDamage());
     }
 
+    public IEnumerator instantiateHitbox()
+    {
+        yield return new WaitForSeconds(0.3f);
+        Instantiate(hbPrefabs, transform.position, hbPrefabs.transform.rotation);
+        StopCoroutine(instantiateHitbox());
+    }
+
     float AngleBetweenPoints(Vector3 a, Vector3 b)
     {
         return Mathf.Atan2(a.x - b.x, a.z - b.z) * Mathf.Rad2Deg;
@@ -77,7 +84,7 @@ public class PlayerScript : MonoBehaviour
 
         swordScript.canDamage = true;
         StartCoroutine(stopCanDamage());
-        Instantiate
+        StartCoroutine(instantiateHitbox());
     }
 
 }
