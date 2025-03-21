@@ -8,6 +8,7 @@ public class EnemyScript : MonoBehaviour
     public GameObject player;
     public int enemySpeed = 1;
     public int enemyHealth = 3;
+    public Vector3 plrCoordinates;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +22,8 @@ public class EnemyScript : MonoBehaviour
     void Update()
     {
         Vector3 lookDirection = (player.transform.position - transform.position).normalized;
+
+        plrCoordinates = (transform.position - player.transform.position).normalized;
 
         controller.Move(lookDirection * Time.deltaTime * enemySpeed);
 

@@ -17,7 +17,6 @@ public class PlayerScript : MonoBehaviour
     public GameObject sword;
     public bool canHit = true;
     private SwordScript swordScript;
-    public GameObject[] hbPrefabs;
 
     private void Start()
     {
@@ -76,8 +75,7 @@ public class PlayerScript : MonoBehaviour
         animator.SetTrigger("PlayerAttack");
 
         swordScript.canDamage = true;
-        StartCoroutine(stopCanDamage());
-        Instantiate
+        StartCoroutine(stopCanDamage());      
     }
 
 }

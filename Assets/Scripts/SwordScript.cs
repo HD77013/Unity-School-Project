@@ -11,7 +11,10 @@ public class SwordScript : MonoBehaviour
     public bool canDamage;
     private int enemiesTouched;
 
+    // private Vector3 plrDirection;
+
     public List<EnemyScript> enemies;
+    public List<Rigidbody> enemiesRB;
 
     // Start is called before the first frame update
     void Start()
@@ -24,9 +27,8 @@ public class SwordScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        // Might make a code that gets player's position from each enemy script. Hopefully I won't regret it.    }
     }
-
     public void OnTriggerEnter(Collider collision)
     {
 
@@ -38,9 +40,8 @@ public class SwordScript : MonoBehaviour
             {
                 touchingEnemy++;
                 enemies.Add(collision.GetComponent<EnemyScript>());
+                enemiesRB.Add(collision.GetComponent<Rigidbody>());
             }
-            
-
 
 
             if (touchingEnemy > enemiesTouched && canDamage)
@@ -49,6 +50,11 @@ public class SwordScript : MonoBehaviour
 
                 foreach (EnemyScript script in enemies) {
                     script.Damage();
+                }
+
+                foreach (Rigidbody rb in enemiesRB)
+                {
+                    rb.AddForce(transform.forward * -25f, ForceMode.Force);
                 }
 
                 playerScript.StopCoroutine(playerScript.stopCanDamage());
@@ -74,6 +80,7 @@ public class SwordScript : MonoBehaviour
             {
                 touchingEnemy--;
                 enemies.Remove(other.GetComponent<EnemyScript>());
+                enemiesRB.Remove(other.GetComponent<Rigidbody>());
             }
 
         }
