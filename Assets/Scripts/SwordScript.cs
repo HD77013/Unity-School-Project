@@ -9,7 +9,6 @@ public class SwordScript : MonoBehaviour
 
     [SerializeField] private int touchingEnemy = 0;
     public bool canDamage;
-    public bool canRemove;
     private int enemiesTouched;
 
     public List<EnemyScript> enemies;
@@ -75,7 +74,7 @@ public class SwordScript : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
 
-            if (enemies.Contains(other.GetComponent<EnemyScript>()) && canRemove)
+            if (enemies.Contains(other.GetComponent<EnemyScript>()))
             {
                 touchingEnemy--;
                 enemies.Remove(other.GetComponent<EnemyScript>());

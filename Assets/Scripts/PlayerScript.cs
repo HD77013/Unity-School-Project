@@ -44,7 +44,7 @@ public class PlayerScript : MonoBehaviour
 
         if (Input.GetMouseButton(0) && canHit)
         {
-            Attack();
+            animator.SetTrigger("PlayerAttack");
             canHit = false;
 
             StartCoroutine(cooldown());
@@ -61,7 +61,6 @@ public class PlayerScript : MonoBehaviour
     public IEnumerator stopCanDamage()
     {
         yield return new WaitForSeconds(0.5f);
-        swordScript.canRemove = true;
         swordScript.canDamage = false;
         StopCoroutine(stopCanDamage());
     }
@@ -75,7 +74,7 @@ public class PlayerScript : MonoBehaviour
     {
         animator.SetTrigger("PlayerAttack");
 
-        swordScript.canRemove = false;
+
         swordScript.canDamage = true;
         StartCoroutine(stopCanDamage());      
     }
