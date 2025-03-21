@@ -52,7 +52,7 @@ public class SwordScript : MonoBehaviour
 
                 foreach (Rigidbody rb in enemiesRB)
                 {
-                    rb.AddForce(plrCoordinates * 1, ForceMode.Impulse);
+                    rb.AddForce(plrCoordinates * 10, ForceMode.Impulse);
                 }
 
                 playerScript.StopCoroutine(playerScript.stopCanDamage());
