@@ -18,6 +18,8 @@ public class PlayerScript : MonoBehaviour
     public bool canHit = true;
     private SwordScript swordScript;
 
+    public int playerHealth = 5;
+
     private void Start()
     {
         swordScript = GetComponentInChildren<SwordScript>();
