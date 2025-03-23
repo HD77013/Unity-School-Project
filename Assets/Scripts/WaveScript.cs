@@ -7,11 +7,6 @@ using JetBrains.Annotations;
 public class WaveSystem : MonoBehaviour
 {
     public GameObject enemyPrefab;
-    public GameObject minigunPrefab;
-    public TextMeshProUGUI waveText;
-    public TextMeshProUGUI waveCompletion;
-    public TextMeshProUGUI waveCompletion1;
-    public GameObject waveCompletionMenu;
     private float spawnRange = 6;
     private int enemyCount;
     public int waveCount = 1;
@@ -22,21 +17,19 @@ public class WaveSystem : MonoBehaviour
     public bool gameCompleted;
     public int FinalWave = 14;
 
-    public AudioSource soundPlayer;
-    public AudioClip completePlay;
-    public AudioClip finalWaveSound;
 
     // Start is called before the first frame update
     void Start()
     {
-        soundPlayer = GetComponent<AudioSource>();
+        StartGame();
+        gameActive = true;
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        enemyCount = FindObjectsOfType<EnemyHandler>().Length;
+        enemyCount = FindObjectsOfType<EnemyScript>().Length;
         if (checkSpawn && enemyCount == 0)
         {
             StartCoroutine(DelayWave());
@@ -52,21 +45,17 @@ public class WaveSystem : MonoBehaviour
         {
             canSpawn = false;
             waveCount++;
-            waveText.text = "Wave: " + waveCount;
             SpawnEnemyWave(waveCount);
 
             if (waveCount == 15)
             {
-                waveText.text = "Final Wave";
             }
             else
             {
-                waveText.text = "Wave: " + waveCount;
             }
 
             if (waveCount % 5 == 0)
             {
-                Instantiate(minigunPrefab, GenerateSpawnPosition(), minigunPrefab.transform.rotation);
             }
 
             checkSpawn = true;
@@ -82,17 +71,14 @@ public class WaveSystem : MonoBehaviour
             checkSpawn = true;
             canSpawn = false;
             SpawnEnemyWave(waveCount);
-            Instantiate(minigunPrefab, GenerateSpawnPosition(), minigunPrefab.transform.rotation);
 
         }
     }
 
     IEnumerator DelayWave()
     {
-        waveCompletion.gameObject.SetActive(true);
-        waveCompletion.text = "Wave Completed!";
+
         yield return new WaitForSeconds(4);
-        waveCompletion.gameObject.SetActive(false);
         startNext = true;
         checkSpawn = false;
         StopAllCoroutines();
@@ -113,18 +99,15 @@ public class WaveSystem : MonoBehaviour
 
         if (remainingWaves == 1 && waveCount == 14)
         {
-            soundPlayer.PlayOneShot(finalWaveSound);
-            waveCompletion1.gameObject.SetActive(true);
-            waveCompletion1.text = "You have the FINAL wave left!";
+
         }
         else if (remainingWaves > 1)
         {
-            waveCompletion1.gameObject.SetActive(true);
-            waveCompletion1.text = $"You now have {remainingWaves} waves left!";
+
         }
 
         yield return new WaitForSeconds(2);
-        waveCompletion1.gameObject.SetActive(false);
+
         yield return new WaitForSeconds(1);
         canSpawn = true;
         StopAllCoroutines();
@@ -132,12 +115,10 @@ public class WaveSystem : MonoBehaviour
 
     public void GameCompleted()
     {
-        soundPlayer.Stop();
-        soundPlayer.PlayOneShot(completePlay, 0.1f);
+
         Debug.Log("Game Completed!");
         gameCompleted = true;
 
-        waveCompletionMenu.gameObject.SetActive(true);
     }
 
     void SpawnEnemyWave(int enemiesToSpawn)

@@ -24,6 +24,21 @@ public class SwordScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        foreach (EnemyScript script in enemies.ToArray())
+        {
+            if (script == null)
+            {
+                enemies.Remove(script);
+            }
+        }
+
+        foreach (Rigidbody rb in enemiesRB.ToArray())
+        {
+            if (rb == null)
+            {
+                enemiesRB.Remove(rb);
+            }
+        }
 
     }
     public void OnTriggerEnter(Collider collision)
@@ -38,7 +53,11 @@ public class SwordScript : MonoBehaviour
                 touchingEnemy++;
                 enemies.Add(collision.GetComponent<EnemyScript>());
                 enemiesRB.Add(collision.GetComponent<Rigidbody>());
+
+
             }
+
+
 
             Vector3 plrCoordinates = (collision.transform.position - transform.position).normalized;
 
@@ -50,10 +69,12 @@ public class SwordScript : MonoBehaviour
                     script.Damage();
                 }
 
+
                 foreach (Rigidbody rb in enemiesRB)
                 {
-                    rb.AddForce(plrCoordinates * 10, ForceMode.Impulse);
+                    rb.AddForce(plrCoordinates * 20, ForceMode.Impulse);
                 }
+
 
                 playerScript.StopCoroutine(playerScript.stopCanDamage());
 
@@ -80,6 +101,8 @@ public class SwordScript : MonoBehaviour
                 enemies.Remove(other.GetComponent<EnemyScript>());
                 enemiesRB.Remove(other.GetComponent<Rigidbody>());
             }
+
+
 
         }
     }

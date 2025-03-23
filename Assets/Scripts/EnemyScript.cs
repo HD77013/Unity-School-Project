@@ -27,6 +27,7 @@ public class EnemyScript : MonoBehaviour
     {
         Vector3 lookDirection = (player.transform.position - transform.position).normalized;
 
+        enemyRB.AddForce(lookDirection * enemySpeed);
         if (canMove)
         {
             enemyRB.AddForce(lookDirection * enemySpeed);
