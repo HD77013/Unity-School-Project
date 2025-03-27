@@ -134,7 +134,7 @@ public class WaveSystem : MonoBehaviour
         float SpawnPosX = Random.Range(-spawnRange, spawnRange);
         float SpawnPosZ = Random.Range(-spawnRange, spawnRange);
 
-        Vector3 randomPos = new Vector3(SpawnPosX, 1, SpawnPosZ);
+        Vector3 randomPos = new Vector3(SpawnPosX, 1.27f, SpawnPosZ);
 
         return randomPos;
     }

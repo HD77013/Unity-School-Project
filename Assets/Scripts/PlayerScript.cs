@@ -13,10 +13,13 @@ public class PlayerScript : MonoBehaviour
     private float speed = 10.0f;
     public Camera cam;
     public Animator animator;
-    public float offset = 5f;
+    public float offset = 2f;
     public GameObject sword;
     public bool canHit = true;
     private SwordScript swordScript;
+
+    private bool hasPowerup = false;
+    bool ActivatePowerup = false;
 
     public int playerHealth = 5;
 
@@ -51,7 +54,26 @@ public class PlayerScript : MonoBehaviour
 
             StartCoroutine(cooldown());
         }
+
+        if (Input.GetMouseButton(1) && hasPowerup)
+        {
+
+            animator.SetBool("ActivatePowerup", true);
+
+
+            
+        }
+        if (Input.GetMouseButtonUp(1) && hasPowerup)
+        {
+
+            animator.SetBool("ActivatePowerup", false);
+            animator.SetTrigger("RemovePowerup");
+
+            
+        }
+
     }
+
 
     IEnumerator cooldown()
     {
@@ -79,6 +101,15 @@ public class PlayerScript : MonoBehaviour
 
         swordScript.canDamage = true;
         StartCoroutine(stopCanDamage());      
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.CompareTag("Powerup"))
+        {
+            hasPowerup = true;
+            Destroy(other.gameObject);
+        }
     }
 
 }

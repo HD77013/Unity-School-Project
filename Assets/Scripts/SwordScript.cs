@@ -72,7 +72,7 @@ public class SwordScript : MonoBehaviour
 
                 foreach (Rigidbody rb in enemiesRB)
                 {
-                    rb.AddForce(plrCoordinates * 20, ForceMode.Impulse);
+                    rb.AddForce(plrCoordinates * 10, ForceMode.Impulse);
                 }
 
 
