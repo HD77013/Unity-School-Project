@@ -9,14 +9,19 @@ public class PlayerScript : MonoBehaviour
     private CharacterController controller;
 
     private Vector3 playerVelocity;
-    private Vector3 move;
 
-    private bool groundedPlayer;
-    private float playerSpeed = 2.0f;
-    private float speed = 10.0f;
-    public Camera cam;
-    public Animator animator;
+    public float speed = 2;
+
+    public float turnSmoothTime = 0.1f;
     public float offset = 2f;
+
+    public Transform cam;
+
+    public Vector3 moveDir;
+
+
+    public Animator animator;
+
     public GameObject sword;
     public bool canHit = true;
     private SwordScript swordScript;
@@ -32,26 +37,28 @@ public class PlayerScript : MonoBehaviour
     private void Start()
     {
         swordScript = GetComponentInChildren<SwordScript>();
-        controller = gameObject.AddComponent<CharacterController>();
+        controller = gameObject.GetComponent<CharacterController>();
     }
 
     void Update()
     {
-        move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        controller.Move(move * Time.deltaTime * playerSpeed);
+        float h = Input.GetAxisRaw("Horizontal");
+        float v = Input.GetAxisRaw("Vertical");
+
+        Vector3 dir = new Vector3(h, 0, v).normalized;
+
+        if (dir.magnitude >= 0.1f)
+        {
+            float targetAngle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+
+            moveDir = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
+            controller.Move(moveDir.normalized * speed * Time.deltaTime);
+        }
+
 
         Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition + Vector3.forward * 10f);
-
-        //Angle between mouse and this object
         float angle = AngleBetweenPoints(transform.position, mouseWorldPosition);
-
-        //Ta daa
         transform.rotation = Quaternion.Euler(new Vector3(0f, angle + offset, 0f));
-
-        
-
-
-        controller.Move(playerVelocity * Time.deltaTime);
 
 
 
@@ -104,7 +111,7 @@ public class PlayerScript : MonoBehaviour
         float startTime = Time.time;
         while (Time.time < startTime + dashTime)
         {
-            controller.Move(move * dashSpeed * Time.deltaTime);   
+            controller.Move(moveDir * dashSpeed * Time.deltaTime);   
             yield return null;
         }
     }

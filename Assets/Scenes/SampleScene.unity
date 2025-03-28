@@ -316,7 +316,8 @@ GameObject:
   - component: {fileID: 424597682}
   - component: {fileID: 424597681}
   - component: {fileID: 424597685}
-  - component: {fileID: 424597686}
+  - component: {fileID: 424597687}
+  - component: {fileID: 424597688}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -434,7 +435,33 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &424597686
+--- !u!143 &424597687
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 424597679}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.50000006
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &424597688
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -446,11 +473,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98e5a88477a2c354fb621bf49a40c13a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 963194227}
+  speed: 10
+  turnSmoothTime: 0.1
+  offset: 2
+  cam: {fileID: 963194228}
+  moveDir: {x: 0, y: 0, z: 0}
   animator: {fileID: 424597685}
-  offset: -122
   sword: {fileID: 882378570}
   canHit: 1
+  dashTime: 0
+  dashSpeed: 0
   playerHealth: 5
 --- !u!1 &705507993
 GameObject:
