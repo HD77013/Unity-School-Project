@@ -7,7 +7,10 @@ using static UnityEngine.GraphicsBuffer;
 public class PlayerScript : MonoBehaviour
 {
     private CharacterController controller;
+
     private Vector3 playerVelocity;
+    private Vector3 move;
+
     private bool groundedPlayer;
     private float playerSpeed = 2.0f;
     private float speed = 10.0f;
@@ -17,6 +20,9 @@ public class PlayerScript : MonoBehaviour
     public GameObject sword;
     public bool canHit = true;
     private SwordScript swordScript;
+
+    public float dashTime;
+    public float dashSpeed;
 
     private bool hasPowerup = false;
     bool ActivatePowerup = false;
@@ -31,7 +37,7 @@ public class PlayerScript : MonoBehaviour
 
     void Update()
     {
-            Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         controller.Move(move * Time.deltaTime * playerSpeed);
 
         Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition + Vector3.forward * 10f);
@@ -46,6 +52,8 @@ public class PlayerScript : MonoBehaviour
 
 
         controller.Move(playerVelocity * Time.deltaTime);
+
+
 
         if (Input.GetMouseButton(0) && canHit)
         {
@@ -65,11 +73,13 @@ public class PlayerScript : MonoBehaviour
         }
         if (Input.GetMouseButtonUp(1) && hasPowerup)
         {
+            
 
             animator.SetBool("ActivatePowerup", false);
             animator.SetTrigger("RemovePowerup");
 
-            
+            //hasPowerup = false;
+
         }
 
     }
@@ -89,6 +99,16 @@ public class PlayerScript : MonoBehaviour
         StopCoroutine(stopCanDamage());
     }
 
+    IEnumerator dash()
+    {
+        float startTime = Time.time;
+        while (Time.time < startTime + dashTime)
+        {
+            controller.Move(move * dashSpeed * Time.deltaTime);   
+            yield return null;
+        }
+    }
+
     float AngleBetweenPoints(Vector3 a, Vector3 b)
     {
         return Mathf.Atan2(a.x - b.x, a.z - b.z) * Mathf.Rad2Deg;
@@ -101,6 +121,11 @@ public class PlayerScript : MonoBehaviour
 
         swordScript.canDamage = true;
         StartCoroutine(stopCanDamage());      
+    }
+
+    void PowerUpAttack()
+    {
+        StartCoroutine(dash());
     }
 
     public void OnTriggerEnter(Collider other)
