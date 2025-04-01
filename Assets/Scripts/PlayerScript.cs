@@ -6,7 +6,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class PlayerScript : MonoBehaviour
 {
-    private CharacterController controller;
+    public CharacterController controller;
 
     private Vector3 playerVelocity;
 
@@ -18,7 +18,7 @@ public class PlayerScript : MonoBehaviour
     public Transform cam;
 
     public Vector3 moveDir;
-
+    public Vector3 plrRotation;
 
     public Animator animator;
 
@@ -58,6 +58,9 @@ public class PlayerScript : MonoBehaviour
 
         Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition + Vector3.forward * 10f);
         float angle = AngleBetweenPoints(transform.position, mouseWorldPosition);
+
+        plrRotation = new Vector3(0f, 0f, transform.localRotation.eulerAngles.x);
+
         transform.rotation = Quaternion.Euler(new Vector3(0f, angle + offset, 0f));
 
 
@@ -80,7 +83,6 @@ public class PlayerScript : MonoBehaviour
         }
         if (Input.GetMouseButtonUp(1) && hasPowerup)
         {
-            
 
             animator.SetBool("ActivatePowerup", false);
             animator.SetTrigger("RemovePowerup");
@@ -106,15 +108,7 @@ public class PlayerScript : MonoBehaviour
         StopCoroutine(stopCanDamage());
     }
 
-    IEnumerator dash()
-    {
-        float startTime = Time.time;
-        while (Time.time < startTime + dashTime)
-        {
-            controller.Move(moveDir * dashSpeed * Time.deltaTime);   
-            yield return null;
-        }
-    }
+
 
     float AngleBetweenPoints(Vector3 a, Vector3 b)
     {
@@ -130,17 +124,28 @@ public class PlayerScript : MonoBehaviour
         StartCoroutine(stopCanDamage());      
     }
 
-    void PowerUpAttack()
-    {
-        StartCoroutine(dash());
-    }
-
     public void OnTriggerEnter(Collider other)
     {
         if (other.transform.CompareTag("Powerup"))
         {
             hasPowerup = true;
             Destroy(other.gameObject);
+        }
+    }
+
+    public void startDash()
+    {
+        StartCoroutine(dash());
+        Debug.Log("Player has dashed");
+    }
+
+    IEnumerator dash()
+    {
+        float startTime = Time.time;
+        while (Time.time < startTime + dashTime)
+        {
+            controller.Move(plrRotation * dashSpeed * Time.deltaTime);
+            yield return null;
         }
     }
 
