@@ -18,7 +18,6 @@ public class PlayerScript : MonoBehaviour
     public Transform cam;
 
     public Vector3 moveDir;
-    public Vector3 plrRotation;
 
     public Animator animator;
 
@@ -29,6 +28,8 @@ public class PlayerScript : MonoBehaviour
     public float dashTime;
     public float dashSpeed;
 
+    public float plrOffset;
+  
     private bool hasPowerup = false;
     bool ActivatePowerup = false;
 
@@ -58,8 +59,7 @@ public class PlayerScript : MonoBehaviour
 
         Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition + Vector3.forward * 10f);
         float angle = AngleBetweenPoints(transform.position, mouseWorldPosition);
-
-        plrRotation = new Vector3(0f, 0f, transform.localRotation.eulerAngles.x);
+        
 
         transform.rotation = Quaternion.Euler(new Vector3(0f, angle + offset, 0f));
 
@@ -142,9 +142,11 @@ public class PlayerScript : MonoBehaviour
     IEnumerator dash()
     {
         float startTime = Time.time;
+        Vector3 plrRot = -transform.right;
+
         while (Time.time < startTime + dashTime)
         {
-            controller.Move(plrRotation * dashSpeed * Time.deltaTime);
+            controller.Move(plrRot * dashSpeed * Time.deltaTime);
             yield return null;
         }
     }
