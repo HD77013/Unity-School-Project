@@ -6,7 +6,7 @@ public class PowerupHitbox : MonoBehaviour
 {
     public PlayerScript playerScript;
 
-    private bool powerupCanDamage;
+    public bool powerupCanDamage = true;
 
     [SerializeField] private int touchingEnemy = 0;
     private int enemiesTouched;
@@ -18,6 +18,14 @@ public class PowerupHitbox : MonoBehaviour
     {
         playerScript = GameObject.Find("Player").GetComponent<PlayerScript>();
         enemiesTouched = 0;
+
+        StartCoroutine(deleteTime());
+    }
+
+    IEnumerator deleteTime()
+    {
+        yield return new WaitForSeconds(0.5f);
+        Destroy(transform.gameObject);
     }
 
     // Update is called once per frame

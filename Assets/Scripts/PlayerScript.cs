@@ -36,11 +36,14 @@ public class PlayerScript : MonoBehaviour
     public int playerHealth = 5;
 
     public GameObject powerupPrefab;
+    public PowerupHitbox powerupHitbox;
 
     private void Start()
     {
+
         swordScript = GetComponentInChildren<SwordScript>();
         controller = gameObject.GetComponent<CharacterController>();
+        powerupHitbox = GameObject.Find("PowerupHB").GetComponent<PowerupHitbox>();
     }
 
     void Update()
@@ -135,6 +138,7 @@ public class PlayerScript : MonoBehaviour
     public void startDash()
     {
         Instantiate(powerupPrefab, transform.position, Quaternion.LookRotation(transform.right));
+        powerupHitbox.powerupCanDamage = true;
 
         StartCoroutine(dash());
         Debug.Log("Player has dashed");
