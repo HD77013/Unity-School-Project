@@ -35,6 +35,8 @@ public class PlayerScript : MonoBehaviour
 
     public int playerHealth = 5;
 
+    public GameObject powerupPrefab;
+
     private void Start()
     {
         swordScript = GetComponentInChildren<SwordScript>();
@@ -117,9 +119,6 @@ public class PlayerScript : MonoBehaviour
 
     void Attack()
     {
-        animator.SetTrigger("PlayerAttack");
-
-
         swordScript.canDamage = true;
         StartCoroutine(stopCanDamage());      
     }
@@ -135,6 +134,8 @@ public class PlayerScript : MonoBehaviour
 
     public void startDash()
     {
+        Instantiate(powerupPrefab, transform.position, Quaternion.LookRotation(transform.right));
+
         StartCoroutine(dash());
         Debug.Log("Player has dashed");
     }

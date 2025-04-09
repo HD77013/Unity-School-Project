@@ -479,12 +479,12 @@ MonoBehaviour:
   offset: -122
   cam: {fileID: 963194228}
   moveDir: {x: 0, y: 0, z: 0}
-  plrRotation: {x: 0, y: 0, z: 0}
   animator: {fileID: 424597685}
   sword: {fileID: 882378570}
   canHit: 1
   dashTime: 0.25
-  dashSpeed: 5
+  dashSpeed: 25
+  plrOffset: 0
   playerHealth: 5
 --- !u!1 &705507993
 GameObject:
