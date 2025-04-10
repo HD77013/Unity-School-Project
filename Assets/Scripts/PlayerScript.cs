@@ -40,7 +40,6 @@ public class PlayerScript : MonoBehaviour
 
     private void Start()
     {
-
         swordScript = GetComponentInChildren<SwordScript>();
         controller = gameObject.GetComponent<CharacterController>();
         powerupHitbox = GameObject.Find("PowerupHB").GetComponent<PowerupHitbox>();
@@ -48,6 +47,8 @@ public class PlayerScript : MonoBehaviour
 
     void Update()
     {
+
+        
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
@@ -75,7 +76,7 @@ public class PlayerScript : MonoBehaviour
             animator.SetTrigger("PlayerAttack");
             canHit = false;
 
-            StartCoroutine(cooldown());
+            StartCoroutine(Cooldown());
         }
 
         if (Input.GetMouseButton(1) && hasPowerup)
@@ -99,18 +100,18 @@ public class PlayerScript : MonoBehaviour
     }
 
 
-    IEnumerator cooldown()
+    IEnumerator Cooldown()
     {
         yield return new WaitForSeconds(1f);
         canHit = true;
-        StopCoroutine(cooldown());
+        StopCoroutine(Cooldown());
     }
 
-    public IEnumerator stopCanDamage()
+    public IEnumerator StopCanDamage()
     {
         yield return new WaitForSeconds(0.5f);
         swordScript.canDamage = false;
-        StopCoroutine(stopCanDamage());
+        StopCoroutine(StopCanDamage());
     }
 
 
@@ -123,7 +124,7 @@ public class PlayerScript : MonoBehaviour
     void Attack()
     {
         swordScript.canDamage = true;
-        StartCoroutine(stopCanDamage());      
+        StartCoroutine(StopCanDamage());      
     }
 
     public void OnTriggerEnter(Collider other)
@@ -135,16 +136,15 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    public void startDash()
+    public void StartDash()
     {
         Instantiate(powerupPrefab, transform.position, Quaternion.LookRotation(transform.right));
-        powerupHitbox.powerupCanDamage = true;
 
-        StartCoroutine(dash());
+        StartCoroutine(Dash());
         Debug.Log("Player has dashed");
     }
 
-    IEnumerator dash()
+    IEnumerator Dash()
     {
         float startTime = Time.time;
         Vector3 plrRot = -transform.right;

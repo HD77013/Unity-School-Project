@@ -72,4 +72,13 @@ public class EnemyScript : MonoBehaviour
 
         enemyHealth--;
     }
+    
+    public void PowerupDamage()
+    {
+        Debug.Log("I have been damaged by powerup");
+        canMove = false;
+        StartCoroutine(ableToMove(1));
+
+        enemyHealth-=3;
+    }
 }

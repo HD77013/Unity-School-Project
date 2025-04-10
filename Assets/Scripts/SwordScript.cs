@@ -76,7 +76,7 @@ public class SwordScript : MonoBehaviour
                 }
 
 
-                playerScript.StopCoroutine(playerScript.stopCanDamage());
+                playerScript.StopCoroutine(playerScript.StopCanDamage());
 
                 canDamage = false;
 

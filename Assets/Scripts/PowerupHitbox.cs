@@ -6,7 +6,7 @@ public class PowerupHitbox : MonoBehaviour
 {
     public PlayerScript playerScript;
 
-    public bool powerupCanDamage = true;
+    public bool powerupCanDamage;
 
     [SerializeField] private int touchingEnemy = 0;
     private int enemiesTouched;
@@ -16,6 +16,7 @@ public class PowerupHitbox : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        powerupCanDamage = true;
         playerScript = GameObject.Find("Player").GetComponent<PlayerScript>();
         enemiesTouched = 0;
 
@@ -74,7 +75,7 @@ public class PowerupHitbox : MonoBehaviour
 
                 foreach (EnemyScript script in enemies)
                 {
-                    script.Damage();
+                    script.PowerupDamage();
                 }
 
 
@@ -84,9 +85,9 @@ public class PowerupHitbox : MonoBehaviour
                 }
 
 
-                playerScript.StopCoroutine(playerScript.stopCanDamage());
-
                 powerupCanDamage = false;
+
+
 
             }
 
