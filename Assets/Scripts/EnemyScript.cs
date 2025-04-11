@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
 {
-    private CharacterController controller;
+    private CharacterController _controller;
     public GameObject player;
-    private PlayerScript playerScript;
+    private PlayerScript _playerScript;
     public int enemySpeed = 3;
     public int enemyHealth = 3;
     [SerializeField]private bool canDamagePlayer = true;
 
     public bool canMove = true;
 
-    private Rigidbody enemyRB;
+    private Rigidbody _enemyRb;
     // Start is called before the first frame update
     void Start()
     {      
         player = GameObject.Find("Player");
-        playerScript = player.GetComponent<PlayerScript>();
-        enemyRB = gameObject.GetComponent<Rigidbody>();
+        _playerScript = player.GetComponent<PlayerScript>();
+        _enemyRb = gameObject.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -29,7 +29,7 @@ public class EnemyScript : MonoBehaviour
 
         if (canMove)
         {
-            enemyRB.AddForce(lookDirection * enemySpeed);
+            _enemyRb.AddForce(lookDirection * enemySpeed);
         }
 
 
@@ -39,10 +39,19 @@ public class EnemyScript : MonoBehaviour
         }
     }
 
-    private IEnumerator ableToMove(int cooldown)
+    private IEnumerator AbleToMove(int cooldown)
     {
         yield return new WaitForSeconds(cooldown);
         canMove = true;
+        canDamagePlayer = false;
+    }
+
+    private IEnumerator PowerupEffect()
+    {
+        canDamagePlayer = false;
+        canMove = false;
+        yield return new WaitForSeconds(3f);
+        enemyHealth -= 3;
     }
 
     public void OnTriggerEnter(Collider other)
@@ -50,7 +59,7 @@ public class EnemyScript : MonoBehaviour
         if (other.transform.CompareTag("Player") && canDamagePlayer){
             Debug.Log("Player is damaged");
 
-            playerScript.playerHealth--;
+            _playerScript.playerHealth--;
             canDamagePlayer = false;
             StartCoroutine(damageCooldown());
         }
@@ -67,8 +76,9 @@ public class EnemyScript : MonoBehaviour
     public void Damage()
     {
         Debug.Log("I have been damaged");
+        canDamagePlayer = false;
         canMove = false;
-        StartCoroutine(ableToMove(1));
+        StartCoroutine(AbleToMove(1));
 
         enemyHealth--;
     }
@@ -76,9 +86,9 @@ public class EnemyScript : MonoBehaviour
     public void PowerupDamage()
     {
         Debug.Log("I have been damaged by powerup");
-        canMove = false;
-        StartCoroutine(ableToMove(1));
 
-        enemyHealth-=3;
+        StartCoroutine(PowerupEffect());
+
+
     }
 }

@@ -9,21 +9,20 @@ public class PowerupHitbox : MonoBehaviour
     public bool powerupCanDamage;
 
     [SerializeField] private int touchingEnemy = 0;
-    private int enemiesTouched;
+    private int _enemiesTouched;
 
     public List<EnemyScript> enemies;
-    public List<Rigidbody> enemiesRB;
     // Start is called before the first frame update
     void Start()
     {
         powerupCanDamage = true;
         playerScript = GameObject.Find("Player").GetComponent<PlayerScript>();
-        enemiesTouched = 0;
+        _enemiesTouched = 0;
 
-        StartCoroutine(deleteTime());
+        StartCoroutine(DeleteTime());
     }
 
-    IEnumerator deleteTime()
+    IEnumerator DeleteTime()
     {
         yield return new WaitForSeconds(0.5f);
         Destroy(transform.gameObject);
@@ -40,14 +39,6 @@ public class PowerupHitbox : MonoBehaviour
             }
         }
 
-        foreach (Rigidbody rb in enemiesRB.ToArray())
-        {
-            if (rb == null)
-            {
-                enemiesRB.Remove(rb);
-            }
-        }
-
     }
     public void OnTriggerEnter(Collider collision)
     {
@@ -60,16 +51,14 @@ public class PowerupHitbox : MonoBehaviour
             {
                 touchingEnemy++;
                 enemies.Add(collision.GetComponent<EnemyScript>());
-                enemiesRB.Add(collision.GetComponent<Rigidbody>());
 
 
             }
 
 
+            
 
-            Vector3 plrCoordinates = (collision.transform.position - transform.position).normalized;
-
-            if (touchingEnemy > enemiesTouched && powerupCanDamage)
+            if (touchingEnemy > _enemiesTouched && powerupCanDamage)
             {
 
 
@@ -77,12 +66,7 @@ public class PowerupHitbox : MonoBehaviour
                 {
                     script.PowerupDamage();
                 }
-
-
-                foreach (Rigidbody rb in enemiesRB)
-                {
-                    rb.AddForce(plrCoordinates * 10, ForceMode.Impulse);
-                }
+                
 
 
                 powerupCanDamage = false;
@@ -108,7 +92,6 @@ public class PowerupHitbox : MonoBehaviour
             {
                 touchingEnemy--;
                 enemies.Remove(other.GetComponent<EnemyScript>());
-                enemiesRB.Remove(other.GetComponent<Rigidbody>());
             }
 
 

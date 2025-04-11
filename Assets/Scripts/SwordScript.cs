@@ -9,16 +9,16 @@ public class SwordScript : MonoBehaviour
 
     [SerializeField] private int touchingEnemy = 0;
     public bool canDamage;
-    private int enemiesTouched;
+    private int _enemiesTouched;
 
     public List<EnemyScript> enemies;
-    public List<Rigidbody> enemiesRB;
+    public List<Rigidbody> enemiesRb;
 
     // Start is called before the first frame update
     void Start()
     {
         playerScript = gameObject.GetComponentInParent<PlayerScript>();
-        enemiesTouched = 0;
+        _enemiesTouched = 0;
     }
 
     // Update is called once per frame
@@ -32,11 +32,11 @@ public class SwordScript : MonoBehaviour
             }
         }
 
-        foreach (Rigidbody rb in enemiesRB.ToArray())
+        foreach (Rigidbody rb in enemiesRb.ToArray())
         {
             if (rb == null)
             {
-                enemiesRB.Remove(rb);
+                enemiesRb.Remove(rb);
             }
         }
 
@@ -52,7 +52,7 @@ public class SwordScript : MonoBehaviour
             {
                 touchingEnemy++;
                 enemies.Add(collision.GetComponent<EnemyScript>());
-                enemiesRB.Add(collision.GetComponent<Rigidbody>());
+                enemiesRb.Add(collision.GetComponent<Rigidbody>());
 
 
             }
@@ -61,7 +61,7 @@ public class SwordScript : MonoBehaviour
 
             Vector3 plrCoordinates = (collision.transform.position - transform.position).normalized;
 
-            if (touchingEnemy > enemiesTouched && canDamage)
+            if (touchingEnemy > _enemiesTouched && canDamage)
             {
 
 
@@ -70,7 +70,7 @@ public class SwordScript : MonoBehaviour
                 }
 
 
-                foreach (Rigidbody rb in enemiesRB)
+                foreach (Rigidbody rb in enemiesRb)
                 {
                     rb.AddForce(plrCoordinates * 10, ForceMode.Impulse);
                 }
@@ -99,7 +99,7 @@ public class SwordScript : MonoBehaviour
             {
                 touchingEnemy--;
                 enemies.Remove(other.GetComponent<EnemyScript>());
-                enemiesRB.Remove(other.GetComponent<Rigidbody>());
+                enemiesRb.Remove(other.GetComponent<Rigidbody>());
             }
 
 

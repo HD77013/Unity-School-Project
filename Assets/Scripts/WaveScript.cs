@@ -7,15 +7,15 @@ using JetBrains.Annotations;
 public class WaveSystem : MonoBehaviour
 {
     public GameObject enemyPrefab;
-    private float spawnRange = 6;
-    private int enemyCount;
+    private float _spawnRange = 6;
+    private int _enemyCount;
     public int waveCount = 1;
     public bool canSpawn;
     public bool checkSpawn;
     public bool gameActive;
     public bool startNext;
     public bool gameCompleted;
-    public int FinalWave = 14;
+    public int finalWave = 14;
 
 
     // Start is called before the first frame update
@@ -29,9 +29,8 @@ public class WaveSystem : MonoBehaviour
     void Update()
     {
 
-        enemyCount = FindObjectsOfType<EnemyScript>().Length;
-        if (checkSpawn && enemyCount == 0)
-        {
+        _enemyCount = FindObjectsOfType<EnemyScript>().Length;
+        if (checkSpawn && _enemyCount == 0) {
             StartCoroutine(DelayWave());
         }
 
@@ -83,7 +82,7 @@ public class WaveSystem : MonoBehaviour
         checkSpawn = false;
         StopAllCoroutines();
 
-        if (enemyCount == 0 && waveCount == 15)
+        if (_enemyCount == 0 && waveCount == 15)
         {
             gameCompleted = true;
             GameCompleted();
@@ -94,7 +93,7 @@ public class WaveSystem : MonoBehaviour
     {
         if (gameCompleted) yield break;
 
-        int remainingWaves = FinalWave - waveCount;
+        int remainingWaves = finalWave - waveCount;
 
 
         if (remainingWaves == 1 && waveCount == 14)
@@ -131,8 +130,8 @@ public class WaveSystem : MonoBehaviour
 
     private Vector3 GenerateSpawnPosition()
     {
-        float SpawnPosX = Random.Range(-spawnRange, spawnRange);
-        float SpawnPosZ = Random.Range(-spawnRange, spawnRange);
+        float SpawnPosX = Random.Range(-_spawnRange, _spawnRange);
+        float SpawnPosZ = Random.Range(-_spawnRange, _spawnRange);
 
         Vector3 randomPos = new Vector3(SpawnPosX, 1.27f, SpawnPosZ);
 

@@ -8,7 +8,7 @@ public class PlayerScript : MonoBehaviour
 {
     public CharacterController controller;
 
-    private Vector3 playerVelocity;
+    private Vector3 _playerVelocity;
 
     public float speed = 2;
 
@@ -23,15 +23,15 @@ public class PlayerScript : MonoBehaviour
 
     public GameObject sword;
     public bool canHit = true;
-    private SwordScript swordScript;
+    private SwordScript _swordScript;
 
     public float dashTime;
     public float dashSpeed;
 
     public float plrOffset;
   
-    private bool hasPowerup = false;
-    bool ActivatePowerup = false;
+    private bool _hasPowerup = false;
+    bool _ActivatePowerup = false;
 
     public int playerHealth = 5;
 
@@ -40,7 +40,7 @@ public class PlayerScript : MonoBehaviour
 
     private void Start()
     {
-        swordScript = GetComponentInChildren<SwordScript>();
+        _swordScript = GetComponentInChildren<SwordScript>();
         controller = gameObject.GetComponent<CharacterController>();
         powerupHitbox = GameObject.Find("PowerupHB").GetComponent<PowerupHitbox>();
     }
@@ -79,21 +79,16 @@ public class PlayerScript : MonoBehaviour
             StartCoroutine(Cooldown());
         }
 
-        if (Input.GetMouseButton(1) && hasPowerup)
-        {
-
+        if (Input.GetMouseButton(1) && _hasPowerup) {
             animator.SetBool("ActivatePowerup", true);
-
-
-            
         }
-        if (Input.GetMouseButtonUp(1) && hasPowerup)
+        
+        if (Input.GetMouseButtonUp(1) && _hasPowerup)
         {
-
             animator.SetBool("ActivatePowerup", false);
             animator.SetTrigger("RemovePowerup");
-
-            //hasPowerup = false;
+ 
+            _hasPowerup = false;
 
         }
 
@@ -110,7 +105,7 @@ public class PlayerScript : MonoBehaviour
     public IEnumerator StopCanDamage()
     {
         yield return new WaitForSeconds(0.5f);
-        swordScript.canDamage = false;
+        _swordScript.canDamage = false;
         StopCoroutine(StopCanDamage());
     }
 
@@ -123,7 +118,7 @@ public class PlayerScript : MonoBehaviour
 
     void Attack()
     {
-        swordScript.canDamage = true;
+        _swordScript.canDamage = true;
         StartCoroutine(StopCanDamage());      
     }
 
@@ -131,7 +126,7 @@ public class PlayerScript : MonoBehaviour
     {
         if (other.transform.CompareTag("Powerup"))
         {
-            hasPowerup = true;
+            _hasPowerup = true;
             Destroy(other.gameObject);
         }
     }
