@@ -13,13 +13,13 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player Collision
+  - Enemy Collision
+  - Ground Collision
+  - SwordDamage
+  - Powerup State
+  - Powerup
+  - Powerup Damage
   - 
   - 
   - 

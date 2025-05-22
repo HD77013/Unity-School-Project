@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7983793889957411169}
   - component: {fileID: 7841071553378702470}
   - component: {fileID: -1878126539782972735}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: PowerupHB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,4 +113,3 @@ MonoBehaviour:
   powerupCanDamage: 0
   touchingEnemy: 0
   enemies: []
-  enemiesRB: []

@@ -52,7 +52,7 @@ public class PlayerScript : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
-        Vector3 dir = new Vector3(h, 0, -v).normalized;
+        Vector3 dir = new Vector3(-h, 0, -v).normalized;
 
         if (dir.magnitude >= 0.1f)
         {
@@ -146,6 +146,8 @@ public class PlayerScript : MonoBehaviour
 
         while (Time.time < startTime + dashTime)
         {
+            gameObject.layer = LayerMask.NameToLayer("Powerup State");
+            
             controller.Move(plrRot * dashSpeed * Time.deltaTime);
             yield return null;
         }
