@@ -597,63 +597,6 @@ MonoBehaviour:
   playerHealth: 5
   powerupPrefab: {fileID: 4658886795251693927, guid: e7f2fa20ac0d91a45b5ab97d8f375e44, type: 3}
   powerupHitbox: {fileID: -1878126539782972735, guid: e7f2fa20ac0d91a45b5ab97d8f375e44, type: 3}
---- !u!1001 &653913201
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1521193908032036504, guid: e7f2fa20ac0d91a45b5ab97d8f375e44, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 13.08749
-      objectReference: {fileID: 0}
-    - target: {fileID: 1521193908032036504, guid: e7f2fa20ac0d91a45b5ab97d8f375e44, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.13379335
-      objectReference: {fileID: 0}
-    - target: {fileID: 1521193908032036504, guid: e7f2fa20ac0d91a45b5ab97d8f375e44, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 15.523515
-      objectReference: {fileID: 0}
-    - target: {fileID: 1521193908032036504, guid: e7f2fa20ac0d91a45b5ab97d8f375e44, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1521193908032036504, guid: e7f2fa20ac0d91a45b5ab97d8f375e44, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1521193908032036504, guid: e7f2fa20ac0d91a45b5ab97d8f375e44, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1521193908032036504, guid: e7f2fa20ac0d91a45b5ab97d8f375e44, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1521193908032036504, guid: e7f2fa20ac0d91a45b5ab97d8f375e44, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1521193908032036504, guid: e7f2fa20ac0d91a45b5ab97d8f375e44, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1521193908032036504, guid: e7f2fa20ac0d91a45b5ab97d8f375e44, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4658886795251693927, guid: e7f2fa20ac0d91a45b5ab97d8f375e44, type: 3}
-      propertyPath: m_Name
-      value: PowerupHB
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e7f2fa20ac0d91a45b5ab97d8f375e44, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -955,6 +898,9 @@ MonoBehaviour:
   playerScript: {fileID: 0}
   touchingEnemy: 0
   canDamage: 0
+  collisionLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
   enemies: []
   enemiesRb: []
 --- !u!1 &2059553939
@@ -1072,5 +1018,4 @@ SceneRoots:
   - {fileID: 43007913}
   - {fileID: 1077572211}
   - {fileID: 2059553943}
-  - {fileID: 653913201}
   - {fileID: 227668282}

@@ -112,4 +112,7 @@ MonoBehaviour:
   playerScript: {fileID: 0}
   powerupCanDamage: 0
   touchingEnemy: 0
+  collisionLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
   enemies: []

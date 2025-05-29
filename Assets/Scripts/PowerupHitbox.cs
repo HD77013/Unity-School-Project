@@ -10,6 +10,8 @@ public class PowerupHitbox : MonoBehaviour
 
     [SerializeField] private int touchingEnemy = 0;
     private int _enemiesTouched;
+    
+    public LayerMask collisionLayerMask;
 
     public List<EnemyScript> enemies;
     // Start is called before the first frame update
@@ -26,6 +28,7 @@ public class PowerupHitbox : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         Destroy(transform.gameObject);
+        powerupCanDamage = false;
     }
 
     // Update is called once per frame
@@ -43,7 +46,7 @@ public class PowerupHitbox : MonoBehaviour
     public void OnTriggerEnter(Collider collision)
     {
 
-        if (collision.CompareTag("Enemy"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy Collision"))
         {
 
 
@@ -69,7 +72,7 @@ public class PowerupHitbox : MonoBehaviour
                 
 
 
-                powerupCanDamage = false;
+                
 
 
 
@@ -85,7 +88,7 @@ public class PowerupHitbox : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy Collision"))
         {
 
             if (enemies.Contains(other.GetComponent<EnemyScript>()))

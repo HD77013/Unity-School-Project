@@ -11,6 +11,8 @@ public class SwordScript : MonoBehaviour
     public bool canDamage;
     private int _enemiesTouched;
 
+    public LayerMask collisionLayerMask;
+
     public List<EnemyScript> enemies;
     public List<Rigidbody> enemiesRb;
 
@@ -44,7 +46,7 @@ public class SwordScript : MonoBehaviour
     public void OnTriggerEnter(Collider collision)
     {
 
-        if (collision.CompareTag("Enemy"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy Collision"))
         {
 
             
@@ -92,7 +94,7 @@ public class SwordScript : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy Collision"))
         {
 
             if (enemies.Contains(other.GetComponent<EnemyScript>()))
